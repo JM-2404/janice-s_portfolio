@@ -36,3 +36,5 @@ body{background:#050505}
 @keyframes heroGentleZoom{from{transform:scale(1)}to{transform:scale(1.055)}}
 @media(max-width:767px){.nav-links{display:none}.hero-background{object-position:62% center}.hero-grid:after{background:linear-gradient(0deg,rgba(0,0,0,.96),rgba(0,0,0,.62) 58%,rgba(0,0,0,.28))}.section{padding-top:92px;padding-bottom:92px}}
 @media(prefers-reduced-motion:reduce){.hero-background{animation:none}*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+#technology{background:#071b3d}#spoken-word{background:#0b0d13}#hosting{background:#f7f4ed}#photography{background:#050505}#contact{background:#050505}
