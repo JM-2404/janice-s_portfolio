@@ -1,5 +1,13 @@
+
 import type { SpokenWordItem } from "./types";
 
 export const spokenWord: SpokenWordItem[] = [
-  // Add each real spoken-word piece and its performance/video links here.
+  {
+    title: "Welcome to Zion",
+    excerpt: "A spoken-word performance.",
+    videoUrl: "PASTE_YOUR_VIDEO_LINK_HERE",
+    performanceImages: [
+        "/images/spokenword/Welcome to Zion video.mp4",
+    ],
+  },
 ];
