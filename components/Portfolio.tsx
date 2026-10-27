@@ -19,7 +19,7 @@ const navigation = [
 
 function SectionHeading({ number, label, title, description }: { number: string; label: string; title: React.ReactNode; description?: string }) {
   return <div className="mb-12 md:mb-16">
-    <div className="flex items-center justify-between gap-4"><span className="eyebrow mono">{label}</span><span className="mono muted">{number} / 06</span></div>
+    <div className="flex items-center justify-between gap-4"><span className="eyebrow mono">{label}</span><span className="mono muted">{number} / 07</span></div>
     <h2 className="section-heading">{title}</h2>
     {description && <p className="muted mt-6 max-w-2xl leading-7">{description}</p>}
   </div>;
