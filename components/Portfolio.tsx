@@ -84,10 +84,9 @@ export default function Portfolio() {
       <div className="absolute right-[11%] top-[22%] w-[25vw] max-w-[340px] min-w-[180px] aspect-square rounded-full border border-[#c6a86b]/30 hero-orb"/><div className="absolute right-[15%] top-[26%] w-[17vw] max-w-[230px] min-w-[125px] aspect-square rounded-full border border-[#c6a86b]/20 hero-orb"/>
       <div className="relative z-10 max-w-[1250px] w-full mx-auto">
         <div className="mono gold mb-7 flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-[#c6a86b] animate-pulse"/> GHANA · OPEN TO THE WORLD</div>
-        <p className="mono muted mb-4">ALSO KNOWN AS</p>
         <h1 className="display hero-word">Middy<span className="gold">.</span></h1>
         <p className="mono gold mt-5">Middy is a</p><div className="hero-identity-wrap mt-2" aria-live="polite"><p key={profile.rotatingIdentities[identityIndex]} className="hero-identity display">{profile.rotatingIdentities[identityIndex]}</p></div>
-        <h2 className="mt-5 text-sm md:text-base tracking-[.08em] text-white/85">{profile.name} (EZER)</h2>
+        <p className="mono muted mt-5 mb-2">ALSO KNOWN AS</p><h2 className="text-sm md:text-base tracking-[.08em] text-white/85">{profile.name} (EZER)</h2>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-9 mt-9 md:mt-12"><div className="max-w-xl"><p className="gold mono mt-4">PASSION. INNOVATION. IMPACT.</p><p className="text-xl md:text-2xl leading-relaxed mt-4">{profile.tagline}</p><p className="muted mt-4 leading-7 max-w-md">{profile.intro}</p></div><div className="flex flex-wrap gap-3"><a href="#work" className="outline-button w-fit">See the work <ArrowDownRight size={15}/></a><a href="#contact" className="outline-button w-fit">Let’s talk <ArrowUpRight size={15}/></a></div></div>
       </div>
       <div className="relative z-10 flex justify-between items-center mt-16 pt-5 border-t border-white/15 mono muted"><span>EZER / PORTFOLIO</span><span className="hidden sm:block">IDEAS MADE HUMAN</span><a href="#about" className="gold">SCROLL TO DISCOVER ↓</a></div>
