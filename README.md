@@ -48,3 +48,34 @@ npm run build
 ## Design intent
 
 The visual direction is editorial and premium: black night-sky hero, subtle star field, restrained gold with careful royal-blue use, and alternating dark/light sections. The persistent EZER wordmark and capsule-style navigation remain visible while scrolling.
+
+
+## Image folders
+
+Portfolio image directories are prepared under `public/images/`:
+
+- `public/images/oh woww.jpg` — cinematic hero portrait
+- `public/images/about-photo.jpg` — About portrait
+- `public/images/photography/` — photography collection covers and galleries
+- `public/images/design/` — design case-study images
+- `public/images/spokenword/` — performance images
+- `public/images/events/` — event galleries
+- `public/images/projects/` — technology project covers
+- `public/images/profile/` — profile-related images
+
+Upload your actual image files using those paths. Keep the exact filenames for the two main portraits unless you also update the corresponding values in `data/profile.ts`. Images are not automatically uploaded from your computer; they must be added to the repository or another public image host.
+
+## Contact form setup (Formspree)
+
+The contact form uses a Formspree endpoint. To enable submissions:
+
+1. Create a form in your Formspree account and set its recipient to `janicedogbe85@gmail.com`.
+2. Copy the form ID from Formspree.
+3. In your Vercel project, open **Settings → Environment Variables** and add `NEXT_PUBLIC_FORMSPREE_ID` with that form ID (not the full URL).
+4. Apply it to Production (and Preview if you want preview forms to work), save, then redeploy.
+
+Until that ID is configured, the form will show a setup message rather than pretending a message was sent.
+
+## Substack feed setup
+
+Set `SUBSTACK_FEED_URL` in the deployment environment to the actual RSS feed URL for your Substack publication. The profile URL alone is not necessarily the RSS URL. Without this setting, manually curated entries in `data/writing.ts` still work, but automatic recent articles will not load.
