@@ -17,3 +17,22 @@ body{background:#050505}
 #about,#design,#writing,#hosting{scroll-margin-top:88px}
 #photography,#technology,#spoken-word{scroll-margin-top:88px}
 @media(prefers-reduced-motion:reduce){.hero-identity,.star-field{animation:none}}
+
+
+/* EZER editorial refinements */
+:root{--bg:#050505;--panel:#0c0c0f;--paper:#f7f4ed;--muted:#b8b8c0;--gold:#c2a56a;--royal:#173d8f;--line:rgba(244,240,232,.15)}
+body{background:#050505}
+.hero-background{z-index:0;opacity:.58;object-position:center 30%;animation:heroGentleZoom 24s ease-in-out infinite alternate}
+.hero-grid:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.91) 0%,rgba(0,0,0,.66) 48%,rgba(0,0,0,.28) 100%),linear-gradient(0deg,#050505 0%,transparent 45%,rgba(0,0,0,.2) 100%)}
+.hero-grid .grain,.hero-grid .star-field{z-index:2;pointer-events:none}
+.hero-grid>div.relative{z-index:3}
+.project-card{background:#0b0b0e}
+.bg-\[\#0a0a0a\]{background:#071b3d}
+.bg-\[\#151515\]{background:#0b0d13}
+#design,#writing,#about,#hosting{background:#f7f4ed}
+#design .project-card,#writing .project-card,#about .project-card,#hosting .project-card{background:#fff;border-color:rgba(10,10,10,.12);color:#151515}
+#design .project-card .muted,#writing .project-card .muted,#hosting .project-card .muted{color:#625f59}
+#work .project-card{background:linear-gradient(135deg,#101117,#071b3d);border-color:rgba(194,165,106,.25)}
+@keyframes heroGentleZoom{from{transform:scale(1)}to{transform:scale(1.055)}}
+@media(max-width:767px){.nav-links{display:none}.hero-background{object-position:62% center}.hero-grid:after{background:linear-gradient(0deg,rgba(0,0,0,.96),rgba(0,0,0,.62) 58%,rgba(0,0,0,.28))}.section{padding-top:92px;padding-bottom:92px}}
+@media(prefers-reduced-motion:reduce){.hero-background{animation:none}*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
