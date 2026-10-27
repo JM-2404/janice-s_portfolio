@@ -1,35 +1,50 @@
-# Janice NutiFafa Middleton-Dogbe — Portfolio
+# EZER — content-driven portfolio
 
-A cinematic, dark editorial personal portfolio built with Next.js App Router, TypeScript, Tailwind CSS v4, Framer Motion and GSAP/ScrollTrigger.
+EZER is a Next.js portfolio for photography, design, technology, writing, spoken word, and event hosting.
 
-## Run locally
+## Content-first editing
 
-1. Install Node.js 20.9 or newer.
-2. Open this folder in a terminal.
-3. Run `npm install`.
-4. Copy `.env.example` to `.env.local`.
-5. Create a form at [Formspree](https://formspree.io/), then set `NEXT_PUBLIC_FORMSPREE_ID=your_real_form_id` in `.env.local`.
-6. Run `npm run dev` and open `http://localhost:3000`.
-7. Run `npm run build` before deployment.
+Add or edit portfolio entries in `data/`. The section layouts read these data files; adding an entry does not require editing a React component.
 
-## Deploy to Vercel
+- `data/profile.ts` — identity, hero rotation, About copy, brands, contact links, and CTA
+- `data/photography.ts` — collections and Pixieset gallery links
+- `data/design.ts` — design case studies and Behance/Canva/Figma links
+- `data/projects.ts` — technology projects, stack, GitHub, and demo links
+- `data/writing.ts` — featured articles, excerpts, dates, read time, Substack links, optional full text
+- `data/spokenword.ts` — spoken-word pieces, excerpts, performance details, video/social links
+- `data/events.ts` — hosting and public-speaking experiences, roles, dates, galleries, testimonials
+- `data/types.ts` — shared TypeScript schemas used by the data files
 
-Import this project into Vercel, connect the Git repository, and add `NEXT_PUBLIC_FORMSPREE_ID` under Project Settings → Environment Variables. Redeploy after adding the variable.
+### Adding photography
 
-## Before publishing — replace editable slots
+1. Upload your image files to the repository under `public/images/photography/` (create the folder if needed).
+2. Add an object to `data/photography.ts`.
+3. Set `coverImage` to a public path such as `/images/photography/portrait-session-cover.jpg`.
+4. Add the Pixieset gallery URL in `galleryLink` and choose one of the supported categories: `Portraits`, `Events`, `Nature`, or `Creative Concepts`.
 
-- Replace design visual placeholders with actual project covers and link each card to the relevant Behance, Canva, Figma or Drive URL.
-- Add original photographs to the photography gallery and link each image to its relevant gallery or post.
-- Verify the technology project summaries, stack, repository URLs and live demo URLs. The current GitHub links point to the profile, not assumed repository URLs.
-- Add real Substack article links. The writing section intentionally does not invent post titles, excerpts, dates or reading times. A live RSS/API integration can be added once the preferred feed format is confirmed.
-- Replace the clearly labelled original poetry line if you prefer to feature a published excerpt; add performance video URLs and real event credits.
-- Add verified hosting engagements, event images and testimonials only with permission.
-- Update `metadataBase` in `app/layout.tsx` to the final production domain.
-- Consider adding a real portrait, favicon, OG image, analytics and a privacy notice for the contact form.
+The image file itself must be uploaded to the repository or another publicly accessible image host; adding a path alone does not upload the image.
 
-## Design notes
+### Adding another item
 
-- Responsive single-page information architecture with mobile navigation.
-- Motion respects `prefers-reduced-motion`.
-- Contact form posts directly to Formspree once configured. No messages are stored by this website.
-- Placeholder art is generated in CSS, not stock photography; replace it with your own work before launch.
+Add an object to the matching data file with a unique `slug`. Use a cover path under `public/` (for example, `/images/design/project-cover.jpg`) and only add real links and details. The portfolio card links to a reusable detail page at `/work/<slug>`.
+
+### Substack feed
+
+The site includes a server-side RSS reader at `/api/substack`. Set the environment variable `SUBSTACK_FEED_URL` to the verified RSS feed URL for the Potter's Piece publication in your deployment environment. The site displays recent posts when the feed is reachable, and falls back to the manually curated entries in `data/writing.ts` if the feed is unavailable or not configured. This avoids guessing a feed URL from the profile URL.
+
+## Development
+
+```bash
+npm install
+npm run dev
+``
+
+To verify a production build locally:
+
+```bash
+npm run build
+``
+
+## Design intent
+
+The visual direction is editorial and premium: black night-sky hero, subtle star field, restrained gold with careful royal-blue use, and alternating dark/light sections. The persistent EZER wordmark and capsule-style navigation remain visible while scrolling.
