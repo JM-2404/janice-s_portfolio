@@ -40,6 +40,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
       <p className="mono gold">{item.category.replace("-", " ")}</p>
       <h1 className="display text-5xl md:text-8xl leading-[.98] mt-5">{item.title}</h1>
       {item.date && <p className="mono muted mt-5">{item.date}</p>}
+      {"background" in item && item.background && <Detail label="Background" value={item.background}/>}
       {item.coverImage && <div className="mt-10"><img src={item.coverImage} alt={item.title} className="w-full max-h-[72vh] object-cover"/></div>}
       <p className="text-xl md:text-2xl leading-8 max-w-4xl mt-10">{item.description}</p>
       {"role" in item && item.role && <Detail label="Role" value={item.role}/>}
@@ -50,6 +51,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
       {"readTime" in item && item.readTime && <Detail label="Read time" value={item.readTime}/>}
       {"performanceDescription" in item && <Detail label="Performance" value={item.performanceDescription}/>}
       {"videoUrl" in item && item.videoUrl && <section className="mt-10"><h2 className="mono gold mb-4">WATCH THE PERFORMANCE</h2><video className="w-full rounded-sm bg-black border border-white/10" controls preload="metadata" playsInline><source src={item.videoUrl} type="video/mp4"/>Your browser does not support the video player.</video></section>}
+      {"performanceImages" in item && item.performanceImages?.length ? <section className="mt-14"><h2 className="display text-3xl mb-6">Performance images</h2><div className="grid sm:grid-cols-2 gap-4">{item.performanceImages.map((image,index)=><img key={image+index} src={image} alt={item.title+" performance "+(index+1)} className="w-full object-cover"/></div></section> : null}
       {"testimonial" in item && item.testimonial && <Detail label="Testimonial" value={item.testimonial}/>}
       {"body" in item && item.body && <div className="prose prose-invert mt-10 max-w-3xl whitespace-pre-wrap leading-8">{item.body}</div>}
       {item.gallery?.length ? <section className="mt-14"><h2 className="display text-3xl mb-6">Gallery</h2><div className="grid sm:grid-cols-2 gap-4">{item.gallery.map((image,index)=><img key={image+index} src={image} alt={item.title+" gallery "+(index+1)} className="w-full object-cover"/>)}</div></section> : null}
