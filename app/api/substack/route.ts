@@ -9,8 +9,7 @@ function tag(xml: string, name: string) {
 }
 
 export async function GET() {
-  const feedUrl = process.env.SUBSTACK_FEED_URL;
-  if (!feedUrl) return NextResponse.json({ articles: [], source: "configure SUBSTACK_FEED_URL" });
+  const feedUrl = process.env.SUBSTACK_FEED_URL || "https://substack.com/@jaymiddy/feed";
   try {
     const response = await fetch(feedUrl, { next: { revalidate: 1800 }, headers: { "User-Agent": "EZER-Portfolio/1.0" } });
     if (!response.ok) return NextResponse.json({ articles: [], source: "unavailable" });
