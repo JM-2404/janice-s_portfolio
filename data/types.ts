@@ -48,7 +48,7 @@ export interface WritingItem extends BaseWorkItem {
   excerpt: string;
   readTime?: string;
   publishedAt?: string;
-  substackLink: string;
+  substackLink?: string;
   body?: string;
 }
 
