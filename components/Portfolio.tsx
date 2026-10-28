@@ -134,7 +134,7 @@ export default function Portfolio() {
           <p className="max-w-lg mt-7 leading-7 text-[#55514a]">Whether you're looking for a designer, photographer, writer, creative technologist, speaker, MC, or collaborator, I'd love to hear about your idea.</p>
           <a className="inline-block mt-6 border-b border-black/25 pb-2 text-sm" href={`mailto:${profile.links.email}`}>{profile.links.email}</a>
           <div className="mt-8 border border-black/15 p-5 md:p-7 rounded-lg">
-            <form onSubmit={async (event)=>{event.preventDefault();setContactStatus("sending");const form=event.currentTarget;try{const formId=process.env.NEXT_PUBLIC_FORMSPREE_ID;if(!formId)throw new Error("Set NEXT_PUBLIC_FORMSPREE_ID in deployment environment");const response=await fetch(`https://formspree.io/f/${formId}`,{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});if(!response.ok)throw new Error("Formspree is not configured yet");setContactStatus("sent");form.reset()}catch{setContactStatus("error")}}} className="grid gap-4">
+            <form onSubmit={async (event)=>{event.preventDefault();setContactStatus("sending");const form=event.currentTarget;try{const response=await fetch("https://formspree.io/f/mdeegkan",{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});if(!response.ok)throw new Error("Formspree is not configured yet");setContactStatus("sent");form.reset()}catch{setContactStatus("error")}}} className="grid gap-4">
               <label className="text-sm" htmlFor="contact-name">Your Name</label>
               <input id="contact-name" name="name" required placeholder="Your Name" className="input-field !text-[#151515] !border-black/20" />
               <label className="text-sm" htmlFor="contact-email">Email</label>
@@ -148,7 +148,7 @@ export default function Portfolio() {
               <textarea id="contact-message" name="message" required placeholder="Tell me about your project, event, collaboration or idea." rows={4} className="input-field !text-[#151515] !border-black/20" />
               <button disabled={contactStatus==="sending"} className="outline-button justify-center !border-black/25">{contactStatus==="sending"?"Sending…":"SEND MESSAGE →"} <Send size={14}/></button>
               {contactStatus==="sent"&&<p className="text-sm text-green-800">Message sent. Thank you for reaching out.</p>}
-              {contactStatus==="error"&&<p className="text-sm text-amber-800">The contact form needs your Formspree form ID configured before it can send. You can email me directly at {profile.links.email}.</p>}
+              {contactStatus==="error"&&<p className="text-sm text-amber-800">Your message could not be sent just now. Please try again or email me directly at {profile.links.email}.</p>}
             </form>
           </div>
         </div>
