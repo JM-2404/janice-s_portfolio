@@ -4,6 +4,9 @@ export interface BaseWorkItem {
   slug: string;
   title: string;
   description: string;
+  background?: string;
+  role?: string;
+  tools?: string[];
   category: WorkCategory;
   date?: string;
   coverImage?: string;
@@ -56,6 +59,7 @@ export interface SpokenWordItem extends BaseWorkItem {
   videoUrl?: string;
   youtubeLink?: string;
   instagramLink?: string;
+  performanceImages?: string[];
 }
 
 export interface EventItem extends BaseWorkItem {
