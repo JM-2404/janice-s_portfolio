@@ -1,5 +1,7 @@
 import type { WritingItem } from "./types";
 
 export const writing: WritingItem[] = [
-  // Add articles here, or connect the Substack RSS feed to populate recent posts.
+  // Add essays, devotionals, reflections or poetry here.
+  // Fields can include coverImage, excerpt, category, readTime, date,
+  // publishedAt, externalLink and body. Manual entries do not require Substack.
 ];
