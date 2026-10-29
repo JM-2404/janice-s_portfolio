@@ -28,6 +28,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
     ...("githubLink" in item && item.githubLink ? [{ label: "GitHub repository", url: item.githubLink }] : []),
     ...("demoLink" in item && item.demoLink ? [{ label: "Live demo", url: item.demoLink }] : []),
     ...("substackLink" in item && item.substackLink ? [{ label: "Read on Substack", url: item.substackLink }] : []),
+    ...("performanceLink" in item && item.performanceLink ? [{ label: "Performance link", url: item.performanceLink }] : []),
     ...("youtubeLink" in item && item.youtubeLink ? [{ label: "YouTube", url: item.youtubeLink }] : []),
     ...("instagramLink" in item && item.instagramLink ? [{ label: "Instagram", url: item.instagramLink }] : []),
     ...("externalLink" in item && item.externalLink ? [{ label: "Open project", url: item.externalLink }] : []),
