@@ -5,6 +5,7 @@ export const writing: WritingItem[] = [
     slug: "you",
     title: "You",
     category: "writing",
+    coverImage: "/images/profile/middy.jpeg",
     description: "A love poem about finding calm, belonging, and a future in another person.",
     excerpt: "In the midst of chaos, you are my calm,\nYour touch is like a soothing balm,\nYour eyes, a reflection of purest love,\nOur souls entwined like hand in glove.",
     date: "",
