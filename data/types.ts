@@ -56,10 +56,12 @@ export interface SpokenWordItem extends BaseWorkItem {
   category: "spoken-word";
   excerpt: string;
   performanceDescription: string;
+  performanceLink?: string;
   videoUrl?: string;
   youtubeLink?: string;
   instagramLink?: string;
   performanceImages?: string[];
+  body?: string;
 }
 
 export interface EventItem extends BaseWorkItem {
