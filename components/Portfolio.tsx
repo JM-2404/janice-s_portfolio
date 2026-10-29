@@ -48,7 +48,8 @@ function EmptySection({ children, href, label }: { children: ReactNode; href?: s
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [identityIndex, setIdentityIndex] = useState(0);
-  const [photoFilter, setPhotoFilter] = useState("All");
+  const [photoFilter, setPhotoFilter] = useState("Portraits");
+  const [photoPreviewSlug, setPhotoPreviewSlug] = useState(photography[0]?.slug ?? "");
   const [substackArticles, setSubstackArticles] = useState<{slug:string;title:string;description:string;url:string;date?:string}[]>([]);
   const [substackState, setSubstackState] = useState<"loading"|"ready"|"empty">("loading");
   const [contactStatus, setContactStatus] = useState<"idle"|"sending"|"sent"|"error">("idle");
@@ -69,7 +70,8 @@ export default function Portfolio() {
     return () => { active = false; };
   }, []);
 
-  const allPhotography = photoFilter === "All" ? photography : photography.filter((item) => item.subcategory === photoFilter);
+  const categoryItems = photography.filter((item) => item.subcategory === photoFilter);
+  const previewPhoto = photography.find((item) => item.slug === photoPreviewSlug) ?? categoryItems[0] ?? photography[0];
 
   return <main className="site-wrap">
     <header className="fixed z-50 top-4 left-1/2 -translate-x-1/2 w-[94%] max-w-[1320px] px-4 md:px-6 py-3 flex items-center justify-between gap-4 rounded-full bg-black/70 backdrop-blur-xl border border-white/15 shadow-2xl">
@@ -97,9 +99,28 @@ export default function Portfolio() {
 
     <section id="work" className="section bg-black"><SectionHeading number="01" label="SELECTED WORK" title={<>A life in<br/><span className="serif gold">many mediums.</span></>} description="Explore the different ways I turn ideas, stories and curiosity into work."/><div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">{[{label:"Photography",href:"#photography"},{label:"Design",href:"#design"},{label:"Technology",href:"#technology"},{label:"Writing",href:"#writing"},{label:"Spoken Word",href:"#spoken-word"},{label:"Public Speaking",href:"#hosting"}].map((item)=><a key={item.label} href={item.href} className="project-card p-6 md:p-8 flex items-center justify-between group"><span className="display text-2xl">{item.label}</span><ArrowUpRight size={18} className="gold transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"/></a>)}</div></section>
 
-    <section id="photography" className="section bg-black"><SectionHeading number="02" label={profile.photographyBrand} title={<>A moment, kept<br/><span className="serif gold">with intention.</span></>} description="Portraits, events, nature and creative concepts. Each collection links to its own gallery."/>
-      <div className="flex flex-wrap gap-2 mb-8">{["All","Portraits","Events","Nature","Creative Concepts"].map((filter)=><button key={filter} onClick={()=>setPhotoFilter(filter)} className={`filter-pill ${photoFilter===filter?"active":""}`}>{filter}</button>)}</div>
-      {allPhotography.length ? <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">{allPhotography.map((item)=><WorkCard key={item.slug} item={item} kind={item.subcategory}/>)}</div> : <EmptySection href={profile.links.pixieset} label="View Full Gallery">A selection of portraits and creative moments. Explore more work through the full galleries.</EmptySection>}
+    <section id="photography" className="section bg-black"><SectionHeading number="02" label={profile.photographyBrand} title={<>A moment, kept<br/><span className="serif gold">with intention.</span></>} description="Selected portraits, events and visual experiments from behind the lens."/>
+      <div className="grid lg:grid-cols-[.7fr_1.3fr] gap-10 lg:gap-16 items-start">
+        <div className="flex flex-col border-t border-white/15">
+          {["Portraits","Events","Nature","Creative Concepts"].map((category,index)=>{
+            const items=photography.filter((item)=>item.subcategory===category);
+            const active=photoFilter===category;
+            return <button key={category} type="button" onMouseEnter={()=>{setPhotoFilter(category);if(items[0])setPhotoPreviewSlug(items[0].slug)}} onFocus={()=>{setPhotoFilter(category);if(items[0])setPhotoPreviewSlug(items[0].slug)}} onClick={()=>{setPhotoFilter(category);if(items[0])setPhotoPreviewSlug(items[0].slug)}} className={`group flex items-center justify-between gap-4 py-5 text-left border-b border-white/15 transition-colors ${active?"text-[#c6a86b]":"text-white/80 hover:text-[#c6a86b]"}`}>
+              <span><span className="mono muted mr-4">0{index+1}</span><span className="display text-2xl md:text-3xl">{category}</span></span><ArrowUpRight size={18} className="shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"/>
+            </button>;
+          })}
+          <a href={profile.links.vsco} target="_blank" rel="noreferrer" className="outline-button mt-7 w-fit">Explore the full VSCO archive <ArrowUpRight size={14}/></a>
+        </div>
+        <div className="min-w-0">
+          {previewPhoto ? <a href={previewPhoto.galleryLink} target="_blank" rel="noreferrer" className="group block relative overflow-hidden bg-[#101010]">
+            <div className="aspect-[4/3] overflow-hidden"><img key={previewPhoto.coverImage} src={previewPhoto.coverImage} alt={previewPhoto.title} className="w-full h-full object-cover transition duration-700 group-hover:scale-[1.035]" loading="lazy"/></div>
+            <div className="absolute inset-x-0 bottom-0 p-5 md:p-7 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex items-end justify-between gap-4">
+              <div><p className="mono gold mb-2">{previewPhoto.subcategory}</p><h3 className="display text-3xl md:text-5xl">{previewPhoto.title}</h3></div><ArrowUpRight size={20}/>
+            </div>
+          </a> : <div className="aspect-[4/3] bg-white/5 flex flex-col justify-end p-6"><p className="mono gold">Selected collections</p><p className="display text-3xl mt-3">Photographs coming into focus.</p></div>}
+          <p className="muted text-sm leading-6 mt-4">{previewPhoto?.description ?? "Explore selected photographs through the VSCO archive."}</p>
+        </div>
+      </div>
       <div className="mt-8 flex flex-wrap gap-3"><a href={profile.links.pixieset} target="_blank" rel="noreferrer" className="outline-button">View Full Gallery on Pixieset <ArrowUpRight size={14}/></a><a href={profile.links.vsco} target="_blank" rel="noreferrer" className="outline-button">View on VSCO <ArrowUpRight size={14}/></a></div>
     </section>
 
@@ -109,17 +130,26 @@ export default function Portfolio() {
     </section>
 
     <section id="technology" className="section bg-[#0a0a0a]"><SectionHeading number="04" label="CREATIVE TECHNOLOGY" title={<>Build with curiosity.<br/><span className="serif gold">Solve with purpose.</span></>} description="Software, experiments and digital experiences where ideas become useful things."/>
-      {techProjects.length ? <div className="grid md:grid-cols-2 gap-5">{techProjects.map((item)=><WorkCard key={item.slug} item={item} kind={item.techStack.join(" · ")}/>)}</div> : <EmptySection href={profile.links.github} label="Explore GitHub">New technology case studies are being prepared. Explore current code and experiments on GitHub.</EmptySection>}
+      {techProjects.length ? <div className="divide-y divide-white/15 border-y border-white/15">{techProjects.map((item,index)=><article key={item.slug} className="grid md:grid-cols-[.25fr_1fr_.65fr] gap-5 md:gap-10 py-8 md:py-10">
+        <p className="mono gold">PROJECT 0{index+1}</p>
+        <div><h3 className="display text-3xl md:text-4xl">{item.title}</h3><p className="muted mt-4 leading-7 max-w-2xl">{item.description}</p>{item.role&&<p className="mono muted mt-4">ROLE · {item.role}</p>}</div>
+        <div className="flex flex-col items-start gap-4"><div className="flex flex-wrap gap-2">{item.techStack.map((tech)=><span key={tech} className="border border-white/20 px-3 py-2 rounded-full text-xs">{tech}</span>)}</div><div className="flex flex-wrap gap-3 mt-2"><a href={item.githubLink} target="_blank" rel="noreferrer" className="outline-button">GitHub <ArrowUpRight size={14}/></a>{item.demoLink&&<a href={item.demoLink} target="_blank" rel="noreferrer" className="outline-button">Live demo <ArrowUpRight size={14}/></a>}</div></div>
+      </article>)}</div> : <EmptySection href={profile.links.github} label="Explore GitHub">Explore current code and experiments on GitHub. Featured project case studies will appear here as verified project details are added.</EmptySection>}
       <a href={profile.links.github} target="_blank" rel="noreferrer" className="outline-button mt-8">Explore GitHub <ArrowUpRight size={14}/></a>
     </section>
 
     <section id="writing" className="section bg-[#f8f7f2] text-[#151515]"><SectionHeading number="05" label={profile.writingBrand} title={<>Words for the<br/><span className="serif gold">in-between.</span></>} description="Reflections, stories, observations and ideas on faith, creativity, purpose, personal growth, technology and impact."/>
-      {writing.length || substackArticles.length ? <div className="grid md:grid-cols-2 gap-5">{[...writing.map((item)=>({slug:item.slug,title:item.title,description:item.excerpt,category:item.category,date:item.publishedAt||item.date,coverImage:item.coverImage,readTime:item.readTime,externalLink:item.externalLink})),...substackArticles.map((item)=>({slug:item.slug,title:item.title,description:item.description,category:"Substack",date:item.date,coverImage:undefined,readTime:undefined,externalLink:item.url}))].map((item,index)=>{const externalLink = item.externalLink; return <a key={item.slug+index} href={externalLink||`/work/${item.slug}`} target={externalLink?"_blank":undefined} rel={externalLink?"noreferrer":undefined} className="project-card block overflow-hidden"><div className="grid grid-cols-1">{item.coverImage && <div className="aspect-[16/9] overflow-hidden"><img src={item.coverImage} alt={item.title} loading="lazy" className="w-full h-full object-cover transition duration-700 hover:scale-[1.03]"/></div>}<div className="p-6 md:p-8"><div className="mono gold">{item.category} {item.date ? `· ${item.date}` : ""}</div><h3 className="display text-2xl md:text-3xl mt-5">{item.title}</h3><p className="muted mt-4 leading-7">{item.description}</p>{item.readTime && <p className="mono muted mt-4">{item.readTime} read</p>}<span className="mono mt-7 inline-flex items-center gap-2">Read more <ArrowUpRight size={14}/></span></div></div></a>})}</div> : <EmptySection href={profile.links.substack} label="Read on Substack">{substackState==="loading"?"Finding the latest Potter’s Piece stories…":"New essays and reflections are on the way. Visit Potter’s Piece on Substack for the latest writing."}</EmptySection>}
+      {writing.length || substackArticles.length ? <div className="grid md:grid-cols-2 gap-5">{[...writing.map((item)=>({slug:item.slug,title:item.title,description:item.excerpt,category:item.category,date:item.publishedAt||item.date,coverImage:item.coverImage,readTime:item.readTime,externalLink:item.externalLink})),...substackArticles.map((item)=>({slug:item.slug,title:item.title,description:item.description,category:"Substack",date:item.date,coverImage:"/images/profile/middy.jpeg",readTime:undefined,externalLink:item.url}))].map((item,index)=>{const externalLink = item.externalLink; return <a key={item.slug+index} href={externalLink||`/work/${item.slug}`} target={externalLink?"_blank":undefined} rel={externalLink?"noreferrer":undefined} className="project-card group block overflow-hidden"><div className="grid grid-cols-1">{item.coverImage && <div className="aspect-[16/9] overflow-hidden"><img src={item.coverImage} alt={item.title} loading="lazy" className="w-full h-full object-cover transition duration-700 group-hover:scale-[1.03]"/></div>}<div className="p-6 md:p-8"><div className="mono gold">{item.category} {item.date ? `· ${item.date}` : ""}</div><h3 className="display text-2xl md:text-3xl mt-5">{item.title}</h3><p className="muted mt-4 leading-7 whitespace-pre-line">{item.description}</p>{item.readTime && <p className="mono muted mt-4">{item.readTime} read</p>}<span className="mono mt-7 inline-flex items-center gap-2">Read more <ArrowUpRight size={14}/></span></div></div></a>})}</div> : <EmptySection href={profile.links.substack} label="Read on Substack">{substackState==="loading"?"Finding the latest Potter’s Piece stories…":"Explore essays and reflections on Potter’s Piece, the Substack publication."}</EmptySection>}
       <a href={profile.links.substack} target="_blank" rel="noreferrer" className="outline-button mt-8">Visit Potter’s Piece on Substack <ArrowUpRight size={14}/></a>
     </section>
 
     <section id="spoken-word" className="section bg-[#151515]"><SectionHeading number="06" label={profile.spokenWordBrand} title={<>Words crafted to<br/><span className="serif gold">move something.</span></>} description={profile.spokenWordSubtitle}/>
-      {spokenWord.length ? <div className="grid md:grid-cols-2 gap-5">{spokenWord.map((item)=><WorkCard key={item.slug} item={item} kind="Spoken word"/>)}</div> : <EmptySection>New spoken-word pieces are being prepared for this collection.</EmptySection>}
+      {spokenWord.length ? <div className="grid gap-8">{spokenWord.map((item,index)=><article key={item.slug} className="relative isolate overflow-hidden min-h-[420px] md:min-h-[500px] flex items-end bg-[#0b0b0e] border border-white/10">
+        {item.coverImage&&<img src={item.coverImage} alt="" aria-hidden="true" className="absolute inset-0 -z-20 w-full h-full object-cover opacity-50"/>}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/95 via-black/65 to-black/20"/>
+        <div className="grain"/>
+        <div className="relative z-10 max-w-4xl p-7 md:p-12 lg:p-16"><p className="mono gold mb-5">SPOKEN WORD / 0{index+1}</p><blockquote className="serif text-3xl md:text-5xl lg:text-6xl leading-[1.12] text-white max-w-4xl">“{item.excerpt}”</blockquote><h3 className="display text-3xl md:text-4xl mt-7">{item.title}</h3><p className="muted mt-3 max-w-2xl leading-7">{item.description}</p><div className="flex flex-wrap gap-3 mt-7"><a href={`/work/${item.slug}`} className="outline-button">Explore the piece <ArrowUpRight size={14}/></a>{item.performanceLink&&<a href={item.performanceLink} target="_blank" rel="noreferrer" className="outline-button">Performance link <ArrowUpRight size={14}/></a>}{item.videoUrl&&<a href={item.videoUrl} target="_blank" rel="noreferrer" className="outline-button">Watch video <ArrowUpRight size={14}/></a>}{item.youtubeLink&&<a href={item.youtubeLink} target="_blank" rel="noreferrer" className="outline-button">YouTube <ArrowUpRight size={14}/></a>}{item.instagramLink&&<a href={item.instagramLink} target="_blank" rel="noreferrer" className="outline-button">Instagram <ArrowUpRight size={14}/></a>}</div>
+      </div></article>)}</div> : <EmptySection>Explore the spoken-word collection soon.</EmptySection>}
     </section>
 
     <section id="hosting" className="section bg-[#f8f7f2] text-[#151515]"><SectionHeading number="07" label="MC · HOSTING · PUBLIC SPEAKING" title={<>Hold the room.<br/><span className="serif gold">Connect the people.</span></>} description="Hosting and speaking experiences built around warmth, clarity, energy and a sense of shared purpose."/>
@@ -156,7 +186,11 @@ export default function Portfolio() {
           {Object.entries({Email:`mailto:${profile.links.email}`,LinkedIn:profile.links.linkedin,GitHub:profile.links.github,Behance:profile.links.behance,Instagram:profile.links.instagram,Substack:profile.links.substack,VSCO:profile.links.vsco,Pixieset:profile.links.pixieset}).map(([label,url])=><a key={label} href={url} target={url.startsWith("mailto:")?undefined:"_blank"} rel="noreferrer" className="group border-b border-black/15 pb-4"><span className="mono text-[#746e63] block mb-3">{label}</span><span className="flex items-center justify-between gap-2 text-sm group-hover:text-[#a3874b]">{label==="Email"?profile.links.email:label==="Pixieset"?"Potter’s Piece Studios":label}<ArrowUpRight size={14}/></span></a>)}
         </div>
       </div>
-      <div className="mt-20 pt-5 border-t border-black/15 flex flex-col sm:flex-row justify-between gap-3 mono text-[#746e63]"><span>PASSION. INNOVATION. IMPACT.</span><span>© EZER 2026 · Creative Technologist • Designer • Photographer • Writer • Spoken Word Artist</span></div>
+      <footer className="mt-20 pt-7 border-t border-black/15">
+        <p className="display text-3xl md:text-5xl tracking-tight">PASSION. INNOVATION. IMPACT.</p>
+        <p className="mono text-[#746e63] mt-5">© EZER 2026</p>
+        <p className="text-sm text-[#4f4b44] mt-3">Creative Technologist • Designer • Photographer • Writer • Spoken Word Artist</p>
+      </footer>
     </section>
   </main>;
 }
